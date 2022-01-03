@@ -1,58 +1,48 @@
 use bevy::prelude::*;
+use bevy::pbr::AmbientLight;
 
 mod systems;
+mod components;
+mod entities;
+
+#[derive(Debug, Clone, Eq, PartialEq, Hash)]
+enum AppState {
+    GameMenu,
+    InGame,
+}
 
 pub fn run() {
     App::build()
         .insert_resource(Msaa { samples: 4 })
+        .insert_resource(AmbientLight {
+            color: Color::WHITE,
+            brightness: 0.05
+        })
         .add_plugins(DefaultPlugins)
-        .add_plugin(HelloPlugin)
-        .add_startup_system(systems::setup::meshes::egg::setup.system())
+        .add_state(AppState::GameMenu)
+        .add_system_set(
+            SystemSet::on_enter(AppState::GameMenu)
+                .with_system(set_egg_count.system())
+        )
+        .add_system_set(
+            SystemSet::on_enter(AppState::InGame)
+                .with_system(systems::setup::meshes::egg::setup.system())
+        )
+        .add_system_set(
+            SystemSet::on_update(AppState::InGame)
+                .with_system(systems::runtime::rotation::rotate.system())
+        )
         .run();
 }
 
-struct Person;
-
-struct Name(String);
-
-struct GreetTimer(Timer);
-
-fn add_people(mut commands: Commands) {
-    commands
-        .spawn()
-        .insert(Person)
-        .insert(Name("Elaina Proctor".to_string()));
-
-    commands
-        .spawn()
-        .insert(Person)
-        .insert(Name("Renzo Humer".to_string()));
-
-    commands
-        .spawn()
-        .insert(Person)
-        .insert(Name("Zayna Nieve".to_string()));
-}
-
-fn greet_people(
-    time: Res<Time>,
-    mut timer: ResMut<GreetTimer>, 
-    query: Query<&Name, With<Person>>,
+fn set_egg_count(
+    mut commands: Commands,
+    mut app_state: ResMut<State<AppState>>,
 ) {
-    if timer.0.tick(time.delta()).just_finished() {
-        for name in query.iter() {
-            println!("hello {}!", name.0);
-        }    
-    }
-}
+    commands
+        .spawn()
+        .insert(entities::Game)
+        .insert(components::EggCount(10));
 
-pub struct HelloPlugin;
-
-impl Plugin for HelloPlugin {
-    fn build(&self, app: &mut AppBuilder) {
-        app
-            .insert_resource(GreetTimer(Timer::from_seconds(2.0, true)))
-            .add_startup_system(add_people.system())
-            .add_system(greet_people.system());
-    }
+    app_state.set(AppState::InGame).expect("Failed transitioning to InGame state!");
 }
