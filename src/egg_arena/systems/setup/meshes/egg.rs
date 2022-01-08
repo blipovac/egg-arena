@@ -13,7 +13,7 @@ pub fn setup(
     mut materials: ResMut<Assets<StandardMaterial>>,
     asset_server: Res<AssetServer>,
 ) {
-    let egg_count = query.single().expect("Getting egg count failed!").0.clone();
+    let egg_count = query.single().expect("Getting egg count failed!").0;
     let egg_column_count: u32 = 2;
     let egg_padding: f32 = 2.0;
 
@@ -29,9 +29,9 @@ pub fn setup(
         asset_server.load("egg/textures/DefaultMaterial_normal.jpeg");
 
     let material_handle = materials.add(StandardMaterial {
-        base_color_texture: Some(egg_texture_handle.clone()),
-        metallic_roughness_texture: Some(egg_metallic_roughness_texture_handle.clone()),
-        normal_map: Some(egg_normal_map_handle.clone()),
+        base_color_texture: Some(egg_texture_handle),
+        metallic_roughness_texture: Some(egg_metallic_roughness_texture_handle),
+        normal_map: Some(egg_normal_map_handle),
         ..Default::default()
     });
 

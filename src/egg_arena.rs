@@ -35,7 +35,7 @@ pub fn run() {
         .add_system_set(
             SystemSet::on_update(AppState::InGame)
                 .with_system(systems::runtime::rotation::rotate.system())
-                .with_system(systems::runtime::fly_cam_transform::report_fly_cam_transform.system())
+                .with_system(systems::runtime::flycam_transform::report_fly_cam_transform.system())
         )
         .run();
 }
