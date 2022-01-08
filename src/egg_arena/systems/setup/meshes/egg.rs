@@ -68,12 +68,6 @@ pub fn setup (
         material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
         ..Default::default()
     });
-
-    commands.spawn_bundle(LightBundle {
-        transform: Transform::from_xyz(0.0, 4.0, 0.0),
-        ..Default::default()
-    });
-
     commands
         .spawn_bundle(PerspectiveCameraBundle {
             transform: Transform::from_xyz(-5.0, 5.5, 10.0).looking_at(Vec3::ZERO, Vec3::Y),
