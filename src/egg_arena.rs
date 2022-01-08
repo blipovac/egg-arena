@@ -27,6 +27,7 @@ pub fn run() {
         .add_system_set(
             SystemSet::on_enter(AppState::InGame)
                 .with_system(systems::setup::meshes::egg::setup.system())
+                .with_system(systems::setup::background::setup.system())
         )
         .add_system_set(
             SystemSet::on_update(AppState::InGame)
