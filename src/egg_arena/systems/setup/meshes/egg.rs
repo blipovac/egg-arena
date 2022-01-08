@@ -1,28 +1,12 @@
 use bevy::prelude::{
-    Commands,
-    ResMut,
-    Res,
-    Assets,
-    Mesh,
-    StandardMaterial,
-    AssetServer,
-    Handle,
-    Texture,
-    PbrBundle,
-    Transform,
-    Color,
-    LightBundle,
-    shape,
-    PerspectiveCameraBundle,
-    Vec3,
-    Query,
-    With
+    shape, AssetServer, Assets, Color, Commands, Handle, Mesh, PbrBundle,
+    Query, Res, ResMut, StandardMaterial, Texture, Transform, With,
 };
 
-use crate::egg_arena::components::{EggCount, Rotates};
-use crate::egg_arena::entities::{Game};
+use crate::egg_arena::components::{EggCount};
+use crate::egg_arena::entities::Game;
 
-pub fn setup (
+pub fn setup(
     query: Query<&EggCount, With<Game>>,
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
@@ -33,15 +17,16 @@ pub fn setup (
     let egg_column_count: u32 = 2;
     let egg_padding: f32 = 2.0;
 
-
     let egg_handle: Handle<Mesh> = asset_server.load("egg/scene.gltf#Mesh0/Primitive0");
 
-    let egg_texture_handle: Handle<Texture> = asset_server
-        .load("egg/textures/DefaultMaterial_baseColor.jpeg");
-    
-    let egg_metallic_roughness_texture_handle: Handle<Texture> = asset_server.load("egg/textures/DefaultMaterial_metallicRoughness.png");
+    let egg_texture_handle: Handle<Texture> =
+        asset_server.load("egg/textures/DefaultMaterial_baseColor.jpeg");
 
-    let egg_normal_map_handle: Handle<Texture> = asset_server.load("egg/textures/DefaultMaterial_normal.jpeg");
+    let egg_metallic_roughness_texture_handle: Handle<Texture> =
+        asset_server.load("egg/textures/DefaultMaterial_metallicRoughness.png");
+
+    let egg_normal_map_handle: Handle<Texture> =
+        asset_server.load("egg/textures/DefaultMaterial_normal.jpeg");
 
     let material_handle = materials.add(StandardMaterial {
         base_color_texture: Some(egg_texture_handle.clone()),
@@ -68,11 +53,4 @@ pub fn setup (
         material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
         ..Default::default()
     });
-    
-    commands
-        .spawn_bundle(PerspectiveCameraBundle {
-            transform: Transform::from_xyz(-5.0, 5.5, 10.0).looking_at(Vec3::ZERO, Vec3::Y),
-            ..Default::default()
-        })
-        .insert(Rotates);
 }

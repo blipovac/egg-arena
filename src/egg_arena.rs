@@ -1,5 +1,6 @@
 use bevy::prelude::*;
 use bevy::pbr::AmbientLight;
+use bevy_flycam::PlayerPlugin;
 
 mod systems;
 mod components;
@@ -19,6 +20,7 @@ pub fn run() {
             brightness: 0.05
         })
         .add_plugins(DefaultPlugins)
+        .add_plugin(PlayerPlugin)
         .add_state(AppState::GameMenu)
         .add_system_set(
             SystemSet::on_enter(AppState::GameMenu)
@@ -32,6 +34,7 @@ pub fn run() {
         .add_system_set(
             SystemSet::on_update(AppState::InGame)
                 .with_system(systems::runtime::rotation::rotate.system())
+                .with_system(systems::runtime::fly_cam_transform::report_fly_cam_transform.system())
         )
         .run();
 }
