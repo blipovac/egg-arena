@@ -4,7 +4,7 @@ use bevy::prelude::{
 };
 
 use crate::egg_arena::components::{EggCount};
-use crate::egg_arena::entities::Game;
+use crate::egg_arena::items::Game;
 
 pub fn setup(
     query: Query<&EggCount, With<Game>>,

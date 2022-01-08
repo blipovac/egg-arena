@@ -4,7 +4,7 @@ use bevy_flycam::PlayerPlugin;
 
 mod systems;
 mod components;
-mod entities;
+mod items;
 
 #[derive(Debug, Clone, Eq, PartialEq, Hash)]
 enum AppState {
@@ -30,6 +30,7 @@ pub fn run() {
             SystemSet::on_enter(AppState::InGame)
                 .with_system(systems::setup::meshes::egg::setup.system())
                 .with_system(systems::setup::background::setup.system())
+                .with_system(systems::setup::text::flycam_transform::setup.system())
         )
         .add_system_set(
             SystemSet::on_update(AppState::InGame)
@@ -45,7 +46,7 @@ fn set_egg_count(
 ) {
     commands
         .spawn()
-        .insert(entities::Game)
+        .insert(items::Game)
         .insert(components::EggCount(10));
 
     app_state.set(AppState::InGame).expect("Failed transitioning to InGame state!");
