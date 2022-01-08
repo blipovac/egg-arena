@@ -35,8 +35,7 @@ pub fn setup (
         material: materials.add(StandardMaterial{
             base_color: Color::BLACK,
             emissive: Color::WHITE,
-            // base_color_texture: Some(background_handle.clone()),
-            emissive_texture: Some(background_handle.clone()),
+            emissive_texture: Some(background_handle),
             ..Default::default()
         }),
         transform: Transform::from_scale(Vec3::new(-1.0, -1.0, -1.0)),
