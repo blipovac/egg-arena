@@ -6,5 +6,5 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-bevy = { version = "0.5.0", features = ["jpeg", "dynamic"]}
-bevy_flycam = "0.5.1"
+bevy = { git = "https://github.com/TheRawMeatball/bevy.git", branch = "fix-hdr-asset-support", features = ["jpeg", "dynamic"]}
+bevy_flycam = { git = "https://github.com/blipovac/bevy_flycam.git", branch = "master" }

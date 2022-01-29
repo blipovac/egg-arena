@@ -13,7 +13,7 @@ enum AppState {
 }
 
 pub fn run() {
-    App::build()
+    App::new()
         .insert_resource(Msaa { samples: 4 })
         .insert_resource(AmbientLight {
             color: Color::WHITE,
@@ -24,18 +24,18 @@ pub fn run() {
         .add_state(AppState::GameMenu)
         .add_system_set(
             SystemSet::on_enter(AppState::GameMenu)
-                .with_system(set_egg_count.system())
+                .with_system(set_egg_count)
         )
         .add_system_set(
             SystemSet::on_enter(AppState::InGame)
-                .with_system(systems::setup::meshes::egg::setup.system())
-                .with_system(systems::setup::background::setup.system())
-                .with_system(systems::setup::text::flycam_transform::setup.system())
+                .with_system(systems::setup::meshes::egg::setup)
+                .with_system(systems::setup::background::setup)
+                .with_system(systems::setup::text::flycam_transform::setup)
         )
         .add_system_set(
             SystemSet::on_update(AppState::InGame)
-                .with_system(systems::runtime::rotation::rotate.system())
-                .with_system(systems::runtime::flycam_transform::report_fly_cam_transform.system())
+                .with_system(systems::runtime::rotation::rotate)
+                .with_system(systems::runtime::flycam_transform::report_fly_cam_transform)
         )
         .run();
 }

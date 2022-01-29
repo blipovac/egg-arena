@@ -1,6 +1,6 @@
 use bevy::prelude::{
     shape, AssetServer, Assets, Color, Commands, Handle, Mesh, PbrBundle,
-    Query, Res, ResMut, StandardMaterial, Texture, Transform, With,
+    Query, Res, ResMut, StandardMaterial, Image, Transform, With,
 };
 
 use crate::egg_arena::components::{EggCount};
@@ -13,25 +13,25 @@ pub fn setup(
     mut materials: ResMut<Assets<StandardMaterial>>,
     asset_server: Res<AssetServer>,
 ) {
-    let egg_count = query.single().expect("Getting egg count failed!").0;
+    let egg_count = query.single().0;
     let egg_column_count: u32 = 2;
     let egg_padding: f32 = 2.0;
 
     let egg_handle: Handle<Mesh> = asset_server.load("egg/scene.gltf#Mesh0/Primitive0");
 
-    let egg_texture_handle: Handle<Texture> =
+    let egg_texture_handle: Handle<Image> =
         asset_server.load("egg/textures/DefaultMaterial_baseColor.jpeg");
 
-    let egg_metallic_roughness_texture_handle: Handle<Texture> =
+    let egg_metallic_roughness_texture_handle: Handle<Image> =
         asset_server.load("egg/textures/DefaultMaterial_metallicRoughness.png");
 
-    let egg_normal_map_handle: Handle<Texture> =
+    let egg_normal_map_handle: Handle<Image> =
         asset_server.load("egg/textures/DefaultMaterial_normal.jpeg");
 
     let material_handle = materials.add(StandardMaterial {
         base_color_texture: Some(egg_texture_handle),
         metallic_roughness_texture: Some(egg_metallic_roughness_texture_handle),
-        normal_map: Some(egg_normal_map_handle),
+        normal_map_texture: Some(egg_normal_map_handle),
         ..Default::default()
     });
 
