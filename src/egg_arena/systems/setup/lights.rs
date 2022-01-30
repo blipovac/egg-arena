@@ -15,7 +15,7 @@ pub fn setup(
 
     commands.spawn_bundle(PointLightBundle {
         point_light: PointLight {
-            color: Color::YELLOW,
+            color: Color::rgb(1.0, 1.0, 0.75),
             intensity: 7500.0,
             range: 100.0,
             ..Default::default()
@@ -26,7 +26,7 @@ pub fn setup(
 
     commands.spawn_bundle(PointLightBundle {
         point_light: PointLight {
-            color: Color::YELLOW,
+            color: Color::rgb(1.0, 1.0, 0.75),
             intensity: 7500.0,
             range: 100.0,
             ..Default::default()
@@ -37,7 +37,7 @@ pub fn setup(
 
     commands.spawn_bundle(PointLightBundle {
         point_light: PointLight {
-            color: Color::YELLOW,
+            color: Color::rgb(1.0, 1.0, 0.75),
             intensity: 7500.0,
             range: 100.0,
             ..Default::default()
@@ -48,7 +48,7 @@ pub fn setup(
 
     commands.spawn_bundle(PointLightBundle {
         point_light: PointLight {
-            color: Color::YELLOW,
+            color: Color::rgb(1.0, 1.0, 0.75),
             intensity: 7500.0,
             range: 100.0,
             ..Default::default()
