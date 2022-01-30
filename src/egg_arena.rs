@@ -29,7 +29,7 @@ pub fn run() {
         .add_system_set(
             SystemSet::on_enter(AppState::InGame)
                 .with_system(systems::setup::meshes::egg::setup)
-                .with_system(systems::setup::background::setup)
+                .with_system(systems::setup::meshes::background::setup)
                 .with_system(systems::setup::text::flycam_transform::setup)
         )
         .add_system_set(
