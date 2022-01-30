@@ -346,7 +346,7 @@ dependencies = [
 [[package]]
 name = "bevy_flycam"
 version = "0.6.0"
-source = "git+https://github.com/blipovac/bevy_flycam.git?branch=master#9784e358ba73b1cb82c1cdddcf5e45abfe9420be"
+source = "git+https://github.com/blipovac/bevy_flycam.git?branch=master#8f97b39e37f7f457472043dd2992f54b0fd84010"
 dependencies = [
  "bevy",
 ]
