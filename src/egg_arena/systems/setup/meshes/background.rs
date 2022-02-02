@@ -1,7 +1,4 @@
-use bevy::prelude::{
-    shape, AssetServer, Assets, Color, Commands, Handle, Image, Mesh, PbrBundle, Res, ResMut,
-    StandardMaterial, Transform, Vec3,
-};
+use bevy::prelude::*;
 
 pub fn setup(
     mut commands: Commands,
@@ -13,8 +10,11 @@ pub fn setup(
 
     commands.spawn_bundle(PbrBundle {
         mesh: meshes.add(Mesh::from(shape::Capsule {
-            radius: 50.0,
-            depth: 3.0,
+            radius: 1.5,
+            rings: 0,
+            depth: 2.0,
+            latitudes: 16,
+            longitudes: 32,
             ..Default::default()
         })),
         material: materials.add(StandardMaterial {
@@ -23,7 +23,9 @@ pub fn setup(
             emissive_texture: Some(background_handle),
             ..Default::default()
         }),
-        transform: Transform::from_scale(Vec3::new(-1.0, -1.0, -1.0)),
+        transform: Transform::from_scale(Vec3::new(-1.0, -1.0, -1.0))
+            .with_translation(Vec3::new(0.0, 1.3, 0.0))
+            .with_rotation(Quat::from_xyzw(0.0, 0.397, 0.0, 0.918)),
         ..Default::default()
     });
 }
