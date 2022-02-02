@@ -8,3 +8,6 @@ edition = "2021"
 [dependencies]
 bevy = { git = "https://github.com/TheRawMeatball/bevy.git", branch = "fix-hdr-asset-support", features = ["jpeg", "dynamic"]}
 bevy_flycam = { git = "https://github.com/blipovac/bevy_flycam.git", branch = "master" }
+
+[profile.release]
+opt-level = 3
