@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 
-use crate::egg_arena::components::EggCount;
-use crate::egg_arena::items::Game;
+use crate::egg_arena::components::{EggCount, Selected};
+use crate::egg_arena::items::{Game, Egg};
 
 pub fn setup(
     query: Query<&EggCount, With<Game>>,
@@ -16,9 +16,8 @@ pub fn setup(
 
     let egg_handle: Handle<Scene> = asset_server.load("egg/scene.gltf#Scene0");
 
-    asset_server.watch_for_changes().unwrap();
-
     for i in 0..egg_count {
+        let selected: bool = i < 2;
         commands
             .spawn_bundle((
                 Transform::from_xyz(
@@ -31,6 +30,8 @@ pub fn setup(
             ))
             .with_children(|builder| {
                 builder.spawn_scene(egg_handle.clone());
-            });
+            })
+            .insert(Egg)
+            .insert(Selected(selected));
     }
 }

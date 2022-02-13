@@ -1,12 +1,16 @@
 use bevy::prelude::*;
+use crate::egg_arena::items::AssetsLoading;
 
 pub fn setup(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
     asset_server: Res<AssetServer>,
+    mut loading: ResMut<AssetsLoading>,
 ) {
     let background_handle: Handle<Image> = asset_server.load("background/comfy_cafe_4k.hdr");
+
+    loading.0.push(background_handle.clone_untyped());
 
     commands.spawn_bundle(PbrBundle {
         mesh: meshes.add(Mesh::from(shape::Capsule {

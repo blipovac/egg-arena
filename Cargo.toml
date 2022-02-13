@@ -11,3 +11,8 @@ bevy_flycam = { git = "https://github.com/blipovac/bevy_flycam.git", branch = "m
 
 [profile.release]
 opt-level = 3
+debug-assertions = false
+
+[profile.dev]
+opt-level = 1
+debug-assertions = true
