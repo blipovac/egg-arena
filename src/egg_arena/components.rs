@@ -8,3 +8,11 @@ pub struct Rotates;
 
 #[derive(Component)]
 pub struct Selected(pub bool);
+
+#[derive(Component)]
+pub enum ButtonVariant {
+    Play,
+    Quit,
+    IncreacePlayerNumber,
+    DecreasePlayerNumber,
+}
