@@ -5,6 +5,7 @@ mod components;
 mod items;
 mod plugins;
 mod systems;
+mod ui;
 
 #[derive(Debug, Clone, Eq, PartialEq, Hash)]
 pub enum AppState {
@@ -29,24 +30,29 @@ pub fn run() {
             brightness: 0.05,
         })
         .add_plugins(DefaultPlugins)
+        // Loading state
         .add_state(AppState::Loading)
         .add_system_set(
             SystemSet::on_enter(AppState::Loading)
                 .with_system(systems::setup::meshes::table::setup)
                 .with_system(systems::setup::meshes::background::setup)
-                .with_system(systems::setup::lights::setup),
+                .with_system(systems::setup::lights::setup)
+                .with_system(ui::ui_camera::setup),
         )
         .add_system_set(
             SystemSet::on_update(AppState::Loading)
                 .with_system(systems::runtime::utils::check_loading_progress),
         )
+        // Game menu
         .add_system_set(SystemSet::on_enter(AppState::GameMenu).with_system(set_egg_count))
+        // In game
         .add_system_set(
             SystemSet::on_enter(AppState::InGame).with_system(systems::setup::meshes::egg::setup),
         )
         .add_system_set(
             SystemSet::on_update(AppState::InGame)
                 .with_system(systems::runtime::rotation::rotate)
+                .with_system(systems::runtime::button_system::listen_for_button_interaction)
                 .with_system(
                     systems::runtime::move_egg_to_faceoff_position::move_egg_to_faceoff_position,
                 ),
@@ -56,7 +62,11 @@ pub fn run() {
     app.add_plugin(plugins::dev_cam::DevCam);
 
     #[cfg(not(debug_assertions))]
-    app.add_system_set(SystemSet::on_enter(AppState::GameMenu).with_system(systems::setup::camera::setup));
+    app.add_system_set(
+        SystemSet::on_enter(AppState::GameMenu)
+            .with_system(ui::game_menu::setup)
+            .with_system(systems::setup::camera::setup),
+    );
 
     app.run();
 }
