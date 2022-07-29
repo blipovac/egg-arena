@@ -3,15 +3,13 @@ use bevy::prelude::*;
 mod entire_screen_container;
 mod game_title_image;
 mod general_menu_button;
-mod general_menu_button_text;
 mod middle_elements_container;
 mod players_number_mutation_button;
-mod players_number_mutation_button_text;
 mod players_number_picker_container;
 mod players_number_picker_label;
 mod players_number_text;
 
-use crate::egg_arena::components::ButtonVariant;
+use crate::egg_arena::{components::ButtonVariant, items::{EggCountText, Ui}};
 
 pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     let font_handle: Handle<Font> = asset_server.load("fonts/FiraSans-Light.ttf");
@@ -44,7 +42,7 @@ pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                                 .with_children(|builder| {
                                     // Decrease player number button text
                                     builder.spawn_bundle(
-                                        players_number_mutation_button_text::setup(
+                                        players_number_mutation_button::text::setup(
                                             font_handle.clone(),
                                             "<",
                                         ),
@@ -52,17 +50,19 @@ pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                                 });
 
                             // Player number text
-                            builder.spawn_bundle(players_number_text::setup(font_handle.clone()));
+                            builder
+                                .spawn_bundle(players_number_text::setup(font_handle.clone()))
+                                .insert(EggCountText);
 
                             // Increase player number button
                             builder
                                 .spawn_bundle(players_number_mutation_button::setup())
-                                .insert(ButtonVariant::IncreacePlayerNumber)
+                                .insert(ButtonVariant::IncreasePlayerNumber)
                                 // Increase player number children
                                 .with_children(|builder| {
                                     // Increase player number button text
                                     builder.spawn_bundle(
-                                        players_number_mutation_button_text::setup(
+                                        players_number_mutation_button::text::setup(
                                             font_handle.clone(),
                                             ">",
                                         ),
@@ -77,7 +77,7 @@ pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                         // Play button children
                         .with_children(|builder| {
                             // Play button text
-                            builder.spawn_bundle(general_menu_button_text::setup(
+                            builder.spawn_bundle(general_menu_button::text::setup(
                                 font_handle.clone(),
                                 "Play",
                             ));
@@ -90,9 +90,12 @@ pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                         // Quit button children
                         .with_children(|builder| {
                             // Quit button text
-                            builder
-                                .spawn_bundle(general_menu_button_text::setup(font_handle, "Quit"));
+                            builder.spawn_bundle(general_menu_button::text::setup(
+                                font_handle,
+                                "Quit",
+                            ));
                         });
                 });
-        });
+        })
+        .insert(Ui);
 }

@@ -1,6 +1,8 @@
 use bevy::prelude::*;
 
-const NORMAL_BUTTON: Color = Color::rgba(0.15, 0.15, 0.15, 0.70);
+use crate::egg_arena::constants::NORMAL_BUTTON;
+
+pub mod text;
 
 pub fn setup() -> ButtonBundle {
     ButtonBundle {
